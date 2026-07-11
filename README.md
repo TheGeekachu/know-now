@@ -15,8 +15,7 @@ An adaptive browser extension I built for Stardance.
 * **Draggable Window:** You can drag it around so it doesn't block your ChatGPT window while doing homework. (Just kidding)
 * **Glassmorphism UI** Apple thinks their Liquid Glass is cool? Well, a 13-year-old made his own in 15 minutes, so there! Mwahahaha!
 * **Completely Free** Unlike other similar extensions, you can use any 'openai' compatible API Key, although this project is designed for keys provided by Groq, and will work perfectly fine with the free tier.
-* **Web Scraper** Work in progress. I can't do everything, ok?
-
+* **Web Scraper** Uses the Wikipedia API to generate relevant links for the user..
 ---
 
 ## Tech Stack
@@ -53,6 +52,16 @@ Total Time Spent: **3+ Hours**
     * Pushed to Git but got notified I forgot to remove the key because it's a public repo.
     * Pushed to Git again.
     * Idk how to write markdown, so I got Gemini to teach me and then wrote this.
+
+* **Day 2: Aesthetics and Web Scraper (Oh, and a Markdown parser)**
+    * Added Markdown parsing
+    * Tried to figure out why the hell my Groq API Key didn't work.
+    * Realised I left it as 'Insert Groq Key Here'
+    * Tested it
+    * Decided I needed to teach Apple a lesson
+    * Added Liquid Glass, something Apple boasted about for a whole WWDC and I did in 15 minutes
+    * Links generated were useless, so tried DuckDuckGo API
+    * Equally useless, so I used the Wikipedia API instead. (Sorry, teachers!)
 ---
 
 ## License (Just 'cause)

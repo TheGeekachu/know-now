@@ -1,3 +1,26 @@
+async function fetchLiveWebResults(query) {
+    try {
+        const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`;
+        const response = await fetch(searchUrl);
+        if (!response.ok) return [];
+        
+        const data = await response.json();
+        const searchResults = data.query?.search || [];
+        
+        const results = [];
+        for (let i = 0; i < Math.min(searchResults.length, 2); i++) {
+            const page = searchResults[i];
+            const url = `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`;
+            const snippet = page.snippet.replace(/<[^>]*>/g, '').trim();
+            
+            results.push({ url, snippet: `${page.title}: ${snippet}` });
+        }
+        return results;
+    } catch (e) {
+        console.error("Wikipedia lookup failed:", e);
+        return [];
+    }
+}
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: "knowNowSearch",
@@ -10,6 +33,13 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         const highlightedText = info.selectionText;
         const apiKey = "PASTE_GROQ_KEY_HERE";
         chrome.tabs.sendMessage(tab.id, {action: "showLoading"});
+        const webContext = await fetchLiveWebResults(highlightedText);
+        let liveSearchContextText = "No live web results found.";
+        if (webContext.length > 0) {
+            liveSearchContextText = webContext.map((res, index) => 
+                `[Result ${index + 1}]\nURL: ${res.url}\nSnippet: ${res.snippet}`
+            ).join("\n\n");
+        }
         try {
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
@@ -22,23 +52,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                     messages: [
                         {
                             role: "system",
-                            content: `You are 'KnowNow', an adaptive AI reading assistant. Analyze the user's text and use your best judgment to determine what format, depth, and length of information they need based on the context.
-
-
-                           1. ADAPTIVE LENGTH & STYLE (STRICTLY A MAXIMUM OF 12 SENTENCES):
-                              - For simple vocabulary words, internet slang, or simple acronyms: give a ultra-brief definition and quick contextual usage (1-2 sentences).
-                              - For complex theories, coding bugs, historical events, or multi-faceted concepts: deliver a deep, structured research overview. (UNDER 12 SENTENCES)
-                              - You can use brief paragraphs if necessary, but the entire response must strictly remain UNDER 12 sentences total.
-
-
-                           2. HIGHLY RELEVANT LINKS:
-                              - At the very end of your explanation, include a section titled "Relevant Links:".
-                              - Dynamically predict 1 to 3 highly accurate, stable target URLs where the user can read more (e.g., standard Wikipedia links formatted like https://en.wikipedia.org/wiki/Topic, MDN Web Docs for web dev, or official documentation). Keep the raw URLs visible.
-`
+                            content: `You are 'KnowNow', an adaptive AI reading assistant utilizing real-time live web results to cross-verify facts.
+                            
+                            CRITICAL DIRECTIONS:
+                            1. ACCURACY CHECK: Compare your internal knowledge with the provided [LIVE WEB CONTEXT]. If there's a contradiction, prioritize the live web information so you are 100% accurate to current events.
+                            
+                            2. ADAPTIVE LENGTH & STYLE (MAX 12 SENTENCES):
+                               - For simple vocabulary/slang: give a rapid definition/context (1-2 sentences).
+                               - For deep concepts/bugs/history: provide structured research summaries. Always stay strictly under 12 sentences total.
+                               
+                            3. VERIFIED RELEVANT LINKS:
+                               - At the absolute end of your response, create a section titled "Relevant Links:".
+                               - You MUST list the exact URLs provided in the [LIVE WEB CONTEXT] so the user gets real, non-broken, clickable links.`
                         },
                         {
                             role: "user",
-                            content: highlightedText
+                            content: `[LIVE WEB CONTEXT]\n${liveSearchContextText}\n\n[USER HIGHLIGHTED TEXT TO EXPLAIN]\n${highlightedText}`
                         }
                     ]
                 })
