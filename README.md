@@ -10,8 +10,12 @@ An adaptive browser extension I built for Stardance.
 * **Context-Aware Analysis:** Uses AI to judge the situation. Basically, it can figure out the kind of info you're looking for.
 * **Predictive Relevant Links:** Generates three stable, relevant links. However, it's kinda stupid cause I haven't added search functionality yet, so some URLs may be faulty.
 * **'Beautiful' UI Overlay:** Idk, still improving it, but aesthetics is definitely not taken lightly by me, and the UI will be updated many times.
-* **Custom Markdown Parser:** In development.
+* **Custom Markdown Parser:** Just complete. Now automatically formatted.
 * **Lightning Fast:** Powered by Groq APIs running `llama-3.1-8b-instant` for almost near-zero latency.
+* **Draggable Window:** You can drag it around so it doesn't block your ChatGPT window while doing homework. (Just kidding)
+* **Glassmorphism UI** Apple thinks their Liquid Glass is cool? Well, a 13-year-old made his own in 15 minutes, so there! Mwahahaha!
+* **Completely Free** Unlike other similar extensions, you can use any 'openai' compatible API Key, although this project is designed for keys provided by Groq, and will work perfectly fine with the free tier.
+* **Web Scraper** Work in progress. I can't do everything, ok?
 
 ---
 
