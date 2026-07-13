@@ -1,7 +1,7 @@
 # ⚡ KnowNow
 
 An adaptive browser extension I built for Stardance. 
-`KnowNow` lets you highlight any text on a webpage, right-click, and instantly get an AI-powered overview, deep context, or rapid definition—dynamically depending on the complexity of what was highlighted.
+`KnowNow` lets you highlight any text on a webpage, right-click, and instantly get AI-powered overview, some context, or quick definitions—depending on the complexity of what was highlighted.
 
 ---
 
