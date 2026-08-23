@@ -31,7 +31,7 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if(info.menuItemId === "knowNowSearch") {
         const highlightedText = info.selectionText;
-        const apiKey = "PASTE_GROQ_KEY_HERE";
+        const apiKey = "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";
         chrome.tabs.sendMessage(tab.id, {action: "showLoading"});
         const webContext = await fetchLiveWebResults(highlightedText);
         let liveSearchContextText = "No live web results found.";
@@ -48,7 +48,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "qwen/qwen3.6-27b",
+                    model: "groq/compound",
                     messages: [
                         {
                             role: "system",
