@@ -1,74 +1,16 @@
-# ⚡ KnowNow
+**Woof. my README got accused of AI again. Not cool, shipwrights.**
 
-An adaptive browser extension I built for Stardance. 
-`KnowNow` lets you highlight any text on a webpage, right-click, and instantly get AI-powered overview, some context, or quick definitions—depending on the complexity of what was highlighted.
+So I'm re-writing the whole thing with really horrible formatting, because apparently good formatting and emojis = AI use. Where do I begin? Ah, I was a young, gullible 13-year-old who found out about HackClub this summer, a month after Stardance started. I found out about Outpost 3 months after buying my Open Sauce ticket. After getting back from Open Sauce, I was psyched to do some projects. The easiest one seemed to be Frictionless. So here we are.
 
----
+**KnowNow is an AI-powered browser extension where you can simply highlight text, right-click, and get instant info.** 
+This was made before I learned about Hack AI, so it uses Groq API Keys, is perfectly compatible with the free tier, and should work just fine with any openai-compatible API services.
 
-## Features
+**Hurdles**
 
-* **Context-Aware Analysis:** Uses AI to judge the situation. Basically, it can figure out the kind of info you're looking for.
-* **Predictive Relevant Links:** Generates three stable, relevant links. However, it's kinda stupid cause I haven't added search functionality yet, so some URLs may be faulty.
-* **'Beautiful' UI Overlay:** Idk, still improving it, but aesthetics is definitely not taken lightly by me, and the UI will be updated many times.
-* **Custom Markdown Parser:** Just complete. Now automatically formatted.
-* **Pretty Fast:** Powered by Groq APIs running `llama-3.1-8b-instant` for almost near-zero latency.
-* **Draggable Window:** You can drag it around so it doesn't block your ChatGPT window while doing homework. (Just kidding)
-* **'Glassmorphism' UI** Apple thinks their Liquid Glass is cool? Well, a 13-year-old made his own in 15 minutes, so there! Mwahahaha!
-* **Completely Free** Unlike other similar extensions, you can use any 'openai' compatible API Key, although this project is designed for keys provided by Groq, and will work perfectly fine with the free tier.
-* **Web Scraper** Uses the Wikipedia API to generate relevant links for the user..
----
+* Shipwrights constantly saying my README was AI-generated even though it's not.
+* Re-learning JavaScript because I'm terrible at it and Python doesn't run in browser
+* Figuring out how to actually use Hackatime, and so on and so forth.
+* Using the Slack, which is new and confusing, especially when you try to scroll up to see replies on your message and you accidentally scroll past it. (Which definitely didn't happen to me, I'm talking about somebody else)
+* Actually getting off my sofa long enough to code. I'd just discovered Destiny 2 (best game in the world by the way) and suddenly the guy who kept forgetting he had an Xbox used it everyday for almost 30 minutes! The fact that it was the summer didn't justify it. Getting a new Series X didn't help either. I even played for a whole hour and a half once.
 
-## Tech Stack
-
-* **Frontend:** Vanilla JavaScript (Manifest V3, Content Scripts, Service Workers)
-* **UI/Styling:** Dynamic DOM Injection with custom CSS (Idk, this is technical mumbo jumbo, but basically this means it was a pain to code)
-* **AI Engine:** Groq API Cloud (`llama-3.1-8b-instant`) (It's technically a cloud inference but nah.)
-
----
-
-## Installation & Setup
-
-Since this extension is in active development, you're gonna have to do some hacking, basically a manual download instead of just navigating to the Extension store. Tedious, I know, but here are the steps:
-
-1. **Clone or Download** this repository to your computer.
-2. Open your browser and navigate to the extensions page (e.g., `chrome://extensions/` or `edge://extensions/`).
-3. Enable **Developer mode** using the toggle switch in the top right.
-4. Click the **Load unpacked** button in the top left.
-5. Select the `know-now` project folder from wherever you saved it.
-6. Open `background.js` and insert your own Groq API key is populated. (BTW, I forgot to say this earlier, but you need a GROQ key. This is designed to work with the free tier.)
-
----
-
-## Development Log (Stardance Time Tracking)
-
-Total Time Spent: **3+ Hours**
-
-* **Day 1: Makin' it work (Sort of)**
-    * Asked Gemini how the hell to make this work.
-    * Gemini was useless so I figured it out.
-    * Wrote the base code.
-    * Realised I forgot to put in the Groq API key.
-    * Tested it and was surprised that it worked.
-    * Pushed to Git but got notified I forgot to remove the key because it's a public repo.
-    * Pushed to Git again.
-    * Idk how to write markdown, so I got Gemini to teach me and then wrote this.
-
-* **Day 2: Aesthetics and Web Scraper (Oh, and a Markdown parser)**
-    * Added Markdown parsing
-    * Tried to figure out why the hell my Groq API Key didn't work.
-    * Realised I left it as 'Insert Groq Key Here'
-    * Tested it
-    * Decided I needed to teach Apple a lesson
-    * Added Liquid Glass, something Apple boasted about for a whole WWDC and I did in 15 minutes
-    * Links generated were useless, so tried DuckDuckGo API
-    * Equally useless, so I used the Wikipedia API instead. (Sorry, teachers!)
-
-* **1 'week?' later...**
-    * So, apparently this Markdown used a lot of AI, so I want to put it on the record there was ZERO AI use in making this Markdown, apart from me learning Markdown through a Google search (does that count as AI usage?)
-    * I've requested recertification, let's see how it goes.
----
-
-## License (Just 'cause)
-
-MIT License. Built with VS Code for Hack Club Stardance.
-Oh, actually, I better give credit to Google Chrome for making this so easy to test.
+**Please approve my ship. This is the first project I've shipped, but it's still the only one not approved yet**
