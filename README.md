@@ -12,5 +12,8 @@ This was made before I learned about Hack AI, so it uses Groq API Keys, is perfe
 * Figuring out how to actually use Hackatime, and so on and so forth.
 * Using the Slack, which is new and confusing, especially when you try to scroll up to see replies on your message and you accidentally scroll past it. (Which definitely didn't happen to me, I'm talking about somebody else)
 * Actually getting off my sofa long enough to code. I'd just discovered Destiny 2 (best game in the world by the way) and suddenly the guy who kept forgetting he had an Xbox used it everyday for almost 30 minutes! The fact that it was the summer didn't justify it. Getting a new Series X didn't help either. I even played for a whole hour and a half once.
+* Also, I'M SO SORRY SHIPWRIGHTS, I complained that you kept telling me to update the README even though I did, and I'm not sure if I pushed changes to Git. Lemme do that now.
+
+***By the way, if you still say the same thing, I WILL FIND YOU***
 
 **Please approve my ship. This is the first project I've shipped, but it's still the only one not approved yet**
