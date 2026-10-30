@@ -16,3 +16,6 @@ venv/
 .venv/
 env/
 streamlit_env/
+
+# .json
+config.json
