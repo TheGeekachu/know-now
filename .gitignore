@@ -1,0 +1,18 @@
+# Python chaces
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Env files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Virtual env/s
+venv/
+.venv/
+env/
+streamlit_env/

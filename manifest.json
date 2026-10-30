@@ -9,7 +9,8 @@
         "scripting"
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "background.js",
+        "type": "module"
     },
     "content_scripts": [
         {
@@ -18,6 +19,12 @@
         }
     ],
     "host_permissions": [
-        "https://api.groq.com/*"
+        "https://hackclub.com*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["config.json"],
+            "matches": ["<all_urls>"]
+        }
     ]
 }

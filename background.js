@@ -1,6 +1,17 @@
+async function getApiKey() {
+    try {
+        const response = await fetch(chrome.runtime.getURL('config.json'));
+        const config = await response.json();
+        return config.HACKCLUB_API_KEY;
+    } catch (e) {
+        console.error("Failed to read configuration file. Make sure config.json exists.", e);
+        return ""; 
+    }
+}
+
 async function fetchLiveWebResults(query) {
     try {
-        const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`;
+        const searchUrl = `https://wikipedia.org{encodeURIComponent(query)}&format=json&origin=*`;
         const response = await fetch(searchUrl);
         if (!response.ok) return [];
         
@@ -10,7 +21,7 @@ async function fetchLiveWebResults(query) {
         const results = [];
         for (let i = 0; i < Math.min(searchResults.length, 2); i++) {
             const page = searchResults[i];
-            const url = `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`;
+            const url = `https://wikipedia.org{encodeURIComponent(page.title.replace(/ /g, '_'))}`;
             const snippet = page.snippet.replace(/<[^>]*>/g, '').trim();
             
             results.push({ url, snippet: `${page.title}: ${snippet}` });
@@ -21,6 +32,7 @@ async function fetchLiveWebResults(query) {
         return [];
     }
 }
+
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: "knowNowSearch",
@@ -28,10 +40,17 @@ chrome.runtime.onInstalled.addListener(() => {
         contexts: ["selection"]
     });
 });
+
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if(info.menuItemId === "knowNowSearch") {
         const highlightedText = info.selectionText;
-        const apiKey = "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";
+        const apiKey = await getApiKey();
+        
+        if (!apiKey) {
+            chrome.tabs.sendMessage(tab.id, {action: "showResult", text: "Error: No API Key found. Please configure your extension."});
+            return;
+        }
+
         chrome.tabs.sendMessage(tab.id, {action: "showLoading"});
         const webContext = await fetchLiveWebResults(highlightedText);
         let liveSearchContextText = "No live web results found.";
@@ -41,14 +60,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             ).join("\n\n");
         }
         try {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            const response = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${apiKey}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "groq/compound",
+                    model: "qwen/qwen3-32b", 
                     messages: [
                         {
                             role: "system",
@@ -69,21 +88,24 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                             role: "user",
                             content: `[LIVE WEB CONTEXT]\n${liveSearchContextText}\n\n[USER HIGHLIGHTED TEXT TO EXPLAIN]\n${highlightedText}`
                         }
-                    ]
+                    ],
+                    stream: false
                 })
             });
+
             const data = await response.json();
             
             if (data.error) {
-                console.error("Groq Error:", data.error);
-                chrome.tabs.sendMessage(tab.id, { action: "showResult", text: `Groq Error: ${data.error.message}`});
+                console.error("Hack Club AI Proxy Error:", data.error);
+                chrome.tabs.sendMessage(tab.id, { action: "showResult", text: `AI Proxy Error: ${data.error.message || JSON.stringify(data.error)}`});
                 return;
             }
+            
             const aiResult = data.choices[0].message.content;
             chrome.tabs.sendMessage(tab.id, { action: "showResult", text: aiResult});
         } catch (error) {
             console.error("Network Error:", error);
-            chrome.tabs.sendMessage(tab.id, {action: "showResult", text: "Error fetching context from Groq."}); 
+            chrome.tabs.sendMessage(tab.id, {action: "showResult", text: "Error fetching context from Hack Club AI."}); 
         }
     }
 });
